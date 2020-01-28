@@ -10,7 +10,6 @@
  * @return {number}
  */
 var myAtoi = function(str) {
-    
+  let trimmed = str.trim();
 };
 // @lc code=end
-
