@@ -10,7 +10,13 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    
+  while (s.includes('()') || s.includes('[]') || s.includes('{}')) {
+    s = s
+      .replace('()', '')
+      .replace('[]', '')
+      .replace('{}', '');
+  }
+  return s === '';
 };
-// @lc code=end
 
+// @lc code=end
