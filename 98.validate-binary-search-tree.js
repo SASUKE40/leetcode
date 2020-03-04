@@ -17,7 +17,16 @@
  * @return {boolean}
  */
 var isValidBST = function(root) {
-    
+  return helper(root, null, null);
 };
-// @lc code=end
 
+function helper(root, low, high) {
+  if (root === null) return true;
+  if (low !== null && root.val <= low) return false;
+  if (high !== null && root.val >= high) return false;
+  if (!helper(root.left, low, root.val)) return false;
+  if (!helper(root.right, root.val, high)) return false;
+  return true;
+}
+
+// @lc code=end
