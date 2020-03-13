@@ -18,7 +18,7 @@ var lengthOfLongestSubstring = function(s) {
     }
     ans = Math.max(ans, i - j + 1);
     map.set(s[i], i + 1);
-  }3.longest-substring-without-repeating-characters
+  }
   return ans;
 };
 // @lc code=end
