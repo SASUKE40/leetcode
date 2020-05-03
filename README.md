@@ -36,13 +36,77 @@ var threeSum = function (nums) {
 };
 ```
 
+### 31.next-permutation
+
+1. 从后向前找到第一个临接上升子序，记下表 upperIndex
+2. 如果数组为降序，则反转
+3. 从后向前找到第一个比 nums[upperIndex] 大的数与之交换
+4. 从 upperIndex+1 之后的部分 reverse
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var nextPermutation = function (nums) {
+    let len = nums.length;
+    let upperIndex = len - 1;
+
+    /**
+     * find the first increasing sub sequence back to front
+     */
+    for (let i = len - 1; i > 0; i--) {
+        if (nums[i] > nums[i - 1]) {
+            upperIndex = i - 1;
+            break;
+        }
+    }
+
+    /**
+     * if not found, reverse it
+     */
+    if (upperIndex === len - 1) {
+        nums = nums.reverse();
+    }
+
+    /**
+     * swap upperIndex with the first greater num back to front
+     */
+    for (let i = len - 1; i > upperIndex; i--) {
+        if (nums[i] > nums[upperIndex]) {
+            swap(nums, i, upperIndex);
+            break;
+        }
+    }
+
+    /**
+     * reverse the suplus array after upperIndex
+     */
+    for (let i = 1; i < (len - upperIndex + 1) >> 1; i++) {
+        swap(nums, i + upperIndex, len - i);
+    }
+    /**
+     * es6 swap function
+     */
+    function swap(nums, i, j) {
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+    }
+};
+```
+
+
+
+
+
 ### 42.trapping-rain-water
 
 
 
 ## Backtracking
 
+### 300.longest-increasing-subsequence
 
+贪心算法+二分查找，数组并不是最终答案，但 i 位上为 i+1 长度的上升子序列最小尾
 
 ## Binary Search
 一般要义就是二分
@@ -61,4 +125,14 @@ return low;
 [4,5,6,7,0,1,2] target: 0
 mid: 7 > 0
 low: 4 > 0 一定不在左边，从右边找，以此类推
+
+
+
+## Bit Manipulation
+
+### 268.missing-number
+
+使用异或消除
+
+
 
