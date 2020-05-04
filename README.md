@@ -136,3 +136,9 @@ low: 4 > 0 一定不在左边，从右边找，以此类推
 
 
 
+## Divide And Conquer
+
+### 215.kth-largest-element-in-an-array
+
+1. 转换成找地 nums.length -k 小的数
+2. 不充分快排
