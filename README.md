@@ -113,7 +113,7 @@ var nextPermutation = function (nums) {
 
 ```js
 while (low < high) {
-  const mid = (low + (high - low)) >> 1;
+  const mid = low + high >> 1;
   if (nums[i] > nums[mid]) low = mid + 1;
   else high = mid;
 }
