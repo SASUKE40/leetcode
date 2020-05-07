@@ -142,3 +142,29 @@ low: 4 > 0 一定不在左边，从右边找，以此类推
 
 1. 转换成找地 nums.length -k 小的数
 2. 不充分快排
+
+
+
+## Dynamic Programming
+
+### 62.Unique Paths
+
+ 类似于杨辉三角，状态转移方程：`dp[i][j] = dp[i][j-1] + dp[i-1][j]`
+
+```js
+/**
+ * @param {number} m
+ * @param {number} n
+ * @return {number}
+ */
+var uniquePaths = function (m, n) {
+  let dp = new Array(m).fill(1);
+  for (let i = 1; i < n; i++) {
+    for (let j = 1; j < m; j++) {
+      dp[j] = dp[j] + dp[j - 1];
+    }
+  }
+  return dp[m - 1];
+};
+```
+
