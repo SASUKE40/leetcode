@@ -112,6 +112,24 @@ var dominantIndex = function (nums) {
 
 ### 多指针
 
+#### 1.Two Sum
+
+```js
+/**
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (numbers, target) {
+    let map = new Map();
+    for (let i = 0; i < numbers.length; i++) {
+        let num = target - numbers[i];
+        if (map.has(num)) return [map.get(num), i];
+        map.set(numbers[i], i);
+    }
+};
+```
+
 #### 15.3-sum
 
 low high 双指针移动，计算结果向 target 逼近
@@ -141,6 +159,27 @@ var threeSum = function (nums) {
     }
   }
   return ans;
+};
+```
+
+#### 27.Remove Element
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function (nums, val) {
+    let i = j = 0;
+    while (j < nums.length) {
+        if (nums[j] !== val) {
+            nums[i] = nums[j];
+            i++;
+        }
+        j++;
+    }
+    nums.length = i;
 };
 ```
 
@@ -201,6 +240,32 @@ var nextPermutation = function (nums) {
     }
 };
 ```
+
+#### 209.Minimum Size Subarray Sum
+
+```js
+/**
+ * @param {number} s
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSubArrayLen = function (s, nums) {
+    let slow = fast = 0
+    let count = Infinity
+    let sum = 0
+    while (slow < nums.length && fast < nums.length) {
+        sum += nums[fast]
+        while (sum >= s) {
+            count = Math.min(count, fast - slow + 1)
+            sum -= nums[slow++]
+        }
+        fast++
+    }
+    return count === Infinity ? 0 : count
+};
+```
+
+
 
 ### 进位
 
@@ -343,6 +408,8 @@ var generate = function (numRows) {
 };
 ```
 
+## String
+
 ### 二进制加法
 
 ```js
@@ -369,6 +436,54 @@ var addBinary = function (a, b) {
     return result.reverse().join('');
 };
 ```
+
+### subStr
+
+```js
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function (haystack, needle) {
+    if (needle === '') return 0;
+    let i = 0;
+    let j = 0;
+    let k = 0;
+    while (i < haystack.length) {
+        while (haystack[j] === needle[k]) {
+            if (k === needle.length - 1) return i;
+            j++;
+            k++;
+        }
+        k = 0;
+        j = ++i;
+    }
+    return -1;
+};
+```
+
+### LCP
+
+```js
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+    if (strs.length === 0) return '';
+    let prefix = strs[0];
+    for (let i = 1; i < strs.length; i++) {
+        while (strs[i].indexOf(prefix) !== 0) {
+            prefix = prefix.substring(0, prefix.length - 1);
+            if (prefix === '') return '';
+        }
+    }
+    return prefix;
+};
+```
+
+
 
 ## Backtracking
 
