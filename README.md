@@ -551,3 +551,96 @@ var uniquePaths = function (m, n) {
 };
 ```
 
+### 63.Unique Paths II
+
+先初始化第 0 行，第 0 列的障碍物情况
+
+随后的路径数：
+
+- 当前有路障：设置为 0
+
+- 否则：为左、上路径之和
+
+```js
+/**
+ * @param {number[][]} obstacleGrid
+ * @return {number}
+ */
+var uniquePathsWithObstacles = function (obstacleGrid) {
+  if (obstacleGrid[0][0] === 1) return 0;
+  const m = obstacleGrid.length;
+  const n = obstacleGrid[0].length;
+  obstacleGrid[0][0] = 1;
+  for (let i = 1; i < m; i++) {
+    if (obstacleGrid[i][0] === 1) obstacleGrid[i][0] = 0;
+    else obstacleGrid[i][0] = obstacleGrid[i - 1][0];
+  }
+  for (let i = 1; i < n; i++) {
+    if (obstacleGrid[0][i] === 1) obstacleGrid[0][i] = 0;
+    else obstacleGrid[0][i] = obstacleGrid[0][i - 1];
+  }
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      if (obstacleGrid[i][j] === 1) obstacleGrid[i][j] = 0;
+      else obstacleGrid[i][j] = obstacleGrid[i - 1][j] + obstacleGrid[i][j - 1];
+    }
+  }
+  return obstacleGrid[m - 1][n - 1];
+};
+```
+
+### 87.Scramble String
+
+```js
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var isScramble = function (s1, s2) {
+  /**
+   * 感谢 @最初の声は 的讲解
+   */
+  const n = s1.length;
+  const m = s2.length;
+  if (n !== m) return false;
+  let dp = new Array(n);
+  for (let i = 0; i < n; i++) {
+    dp[i] = new Array(n);
+    for (let j = 0; j < n; j++) {
+      dp[i][j] = new Array(n + 1).fill(false);
+    }
+  }
+  /**
+   * 初始化单个字符匹配的结果
+   */
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      dp[i][j][1] = s1[i] === s2[j];
+    }
+  }
+  // [2, n] 长度匹配
+  for (let len = 2; len <= n; len++) {
+    // 注意边界，每 len 段都要进行匹配，所以边界为 [0, n - len]
+    for (let i = 0; i < n - len + 1; i++) {
+      for (let j = 0; j < n - len + 1; j++) {
+        // 已经记录过的值就无需再改写
+        for (let k = 1; k < len && !dp[i][j][len]; k++) {
+          // 两种情况：S1 match T1 && S2 match T2 || S1 match T2 && S2 match T1
+          // i: S起始点
+          // j: T起始点
+          // k: 截取点
+          dp[i][j][len] =
+            (dp[i][j][k] && dp[i + k][j + k][len - k]) ||
+            (dp[i][j + len - k][k] && dp[i + k][j][len - k]);
+        }
+      }
+    }
+  }
+  // 代表从 S0 T0 开始，长度为 n 的解
+  return dp[0][0][n];
+};
+```
+
+
+
