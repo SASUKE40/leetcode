@@ -17,14 +17,13 @@
  * @return {boolean}
  */
 var isValidBST = function (root) {
-  function helper(node, low, high) {
-    if (node === null) return true;
-    if (low !== null && node.val <= low) return false;
-    if (high !== null && node.val >= high) return false;
-    if (!helper(node.left, low, node.val)) return false;
-    if (!helper(node.right, node.val, high)) return false;
-    return true;
+  function traverse(root, low, high) {
+    if (!root) return true;
+    if (root.val <= low || root.val >= high) return false;
+    return (
+      traverse(root.left, low, root.val) && traverse(root.right, root.val, high)
+    );
   }
-  return helper(root, null, null);
+  return traverse(root, -Infinity, Infinity);
 };
 // @lc code=end
