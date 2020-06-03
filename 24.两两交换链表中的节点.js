@@ -17,11 +17,28 @@
  * @return {ListNode}
  */
 var swapPairs = function (head) {
-  if (!head || !head.next) return head;
-  let firstNode = head;
-  let secondNode = head.next;
-  firstNode.next = swapPairs(secondNode.next);
-  secondNode.next = firstNode;
-  return secondNode;
+  let dummy = new ListNode();
+  dummy.next = head;
+  let prev = dummy;
+  while (head && head.next) {
+    let firstNode = head;
+    let secondNode = head.next;
+
+    prev.next = secondNode;
+    firstNode.next = secondNode.next;
+    secondNode.next = firstNode;
+
+    prev = firstNode;
+    head = firstNode.next;
+  }
+  return dummy.next;
 };
+// var swapPairs = function (head) {
+//   if (!head || !head.next) return head;
+//   let firstNode = head;
+//   let secondNode = head.next;
+//   firstNode.next = swapPairs(secondNode.next);
+//   secondNode.next = firstNode;
+//   return secondNode;
+// };
 // @lc code=end
