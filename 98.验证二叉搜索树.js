@@ -16,14 +16,26 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
+// var isValidBST = function (root) {
+//   function traverse(root, low, high) {
+//     if (!root) return true;
+//     if (root.val <= low || root.val >= high) return false;
+//     return (
+//       traverse(root.left, low, root.val) && traverse(root.right, root.val, high)
+//     );
+//   }
+//   return traverse(root, -Infinity, Infinity);
+// };
+
 var isValidBST = function (root) {
-  function traverse(root, low, high) {
+  let prev_ = null;
+  return inOrder(root);
+  function inOrder(root) {
     if (!root) return true;
-    if (root.val <= low || root.val >= high) return false;
-    return (
-      traverse(root.left, low, root.val) && traverse(root.right, root.val, high)
-    );
+    if (!inOrder(root.left)) return false;
+    if (prev_ && root.val <= prev_.val) return false;
+    prev_ = root;
+    return inOrder(root.right);
   }
-  return traverse(root, -Infinity, Infinity);
 };
 // @lc code=end
